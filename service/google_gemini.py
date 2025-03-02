@@ -10,7 +10,13 @@ of the type {product_name, initial_price, discounted_price}. Provide only the JS
 
 def ask_gemini(img_path):
     img = PIL.Image.open(img_path)
-    response = client.models.generate_content(
-        model="gemini-2.0-flash",
-        contents=[question, img])
-    return response.text
+    message = ""
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.0-flash",
+            contents=[question, img])
+        message = response.text
+    except Exception as e:
+        print(f"Error Message: {e}")
+    finally:
+        return message
